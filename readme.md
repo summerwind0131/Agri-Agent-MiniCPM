@@ -95,5 +95,3 @@ src/simulation_pro.py: Main Loop. Manages video flow, AI inference timing, and s
 ---
 
 Developed by Fengyuan @ Nankai University.
-
-> > > > > > > 658c70a250bcca8ebc9bbc699d09f7232724ed65
