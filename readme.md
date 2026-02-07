@@ -13,6 +13,13 @@
 
 ## ✨ Key Features (核心功能)
 
+- **🖥️ Remote Command Center (远程指挥中心)**
+  - **Web Interface**: A responsive dashboard built with Gradio showing real-time video feeds and telemetry.
+  - _基于 Web 的可视化界面，支持实时画面回传、传感器数据监控（速度/电池/坐标）（需结合小车自我更新）。_
+
+- **👁️ Asynchronous AI Inference (异步 AI 推理)**
+  - **Multi-threading**: Decouples AI inference from video rendering to ensure smooth playback while processing heavy VLM tasks.
+  - _采用多线程架构，将大模型推理与视频流渲染分离，保证画面流畅不卡顿。_
 - **👁️ VLM-Powered Diagnosis**: Utilizes `MiniCPM-Llama3-V-2.5` for high-precision crop status identification (Healthy/Disease/Pest).
   - _基于视觉语言模型的精准诊断，支持自然语言理解。_
 - **🏎️ Real-Time Simulation**: Mock driver workflow with an interval-based AI inference engine.
@@ -21,6 +28,20 @@
   - _智能仪表盘，支持中文渲染、延迟监控及动态指令显示。_
 - **🧠 Expert System**: Integrated rule-based knowledge base for immediate agricultural advice.
   - _内置专家知识库，根据诊断结果自动匹配农事建议（如喷洒、减速、巡航）。_（待进一步更新）
+
+## 📂 File Structure (目录结构)
+
+```text
+Agri-Agent-MiniCPM/
+├── assets/                 # 资源文件 (视频/字体)
+├── src/                    # 源代码
+│   ├── agri_agent.py       # AI 模型核心类 (Model Wrapper)
+│   ├── ui_utils.py         # HUD 渲染工具 (Rendering Engine)
+│   ├── web_ui.py           # [New] Web 指挥中心入口 (Main Entry)
+│   └── main_simulation.py  # 本地仿真脚本 (Legacy)
+├── requirements.txt        # 依赖库
+└── README.md               # 说明文档
+```
 
 ## 🛠️ System Architecture (系统架构)
 
@@ -54,7 +75,7 @@ Verified on RTX 3090/4090
 
 ```Bash
 git clone [https://github.com/summerwind0131/Agri-Agent-MiniCPM.git](https://github.com/summerwind0131/Agri-Agent-MiniCPM.git)
-cd Agri Agent MiniCPM
+cd Agri-Agent-MiniCPM
 ```
 
 #### Install dependencies
@@ -67,14 +88,39 @@ cd Agri Agent MiniCPM
 
 ### 3. Model Preparation (模型准备)
 
-Please download the MiniCPM-Llama3-V-2_5 weights from HuggingFace or ModelScope and place them in the directory defined in src/agri_agent.py.
+Please download MiniCPM-Llama3-V-2_5 weights from HuggingFace or ModelScope.
 
-### 4. Run Simulation (运行仿真)
+Configuration: Update MODEL_PATH in src/web_ui.py to your local path or place them in the directory defined in src/agri_agent.py.
+
+### 4. Run Simulation (运行仿真)(可选择)
 
 ```Bash
 
    python src/simulation_pro.py
 ```
+
+### 5. Run Command Center (启动指挥中心)
+
+Run the web application:
+
+```Bash
+cd src
+python web_ui.py
+```
+
+Access: Open your browser and go to http://localhost:6006
+
+Remote: If running on a cloud server (e.g., AutoDL), use the provided mapped URL.
+
+#### 🎮 User Guide (使用指南)
+
+Initialize (初始化): Click 1. 初始化系统 to load the VLM model. Wait for the "System Online" message.
+
+Start Patrol (开始巡航): Click 2. 开始巡航. The video feed will start, and the AI will begin diagnosing crops.
+
+Monitor (监控): Watch the "AI Diagnosis Log" table update in real-time.
+
+Stop (停止): Click 3. 紧急停止 to end the session.
 
 ## 📂 File Structure (文件说明)
 
